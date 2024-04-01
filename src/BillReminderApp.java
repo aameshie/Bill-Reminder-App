@@ -9,24 +9,35 @@ public class BillReminderApp {
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     System.out.println("Bill Reminder App");
-    System.out.println("Enter the number of bills you want to add: ");
+    System.out.println("Enter The # Of Bills You Want To Add: ");
 
     int numBills = scanner.nextInt();
     scanner.nextLine();
 
     for (int i = 0; i < numBills; i++) {
-      System.out.println("Enter bill # " + (i + 1) + " information:");
+      System.out.println("Enter Bill # " + (i + 1) + " information:");
 
       System.out.print("Name: ");
       String name = scanner.nextLine();
-    }
 
-    // Example bills
-    manager.addBill(new Bill("Internet", LocalDate.of(2024, 4, 15), LocalDate.of(2024, 4, 10)));
-    manager.addBill(new Bill("Electricity", LocalDate.of(2024, 4, 20), LocalDate.of(2024, 4, 15)));
+      System.out.print("Due Date (YYYY-MM-DD): ");
+      String dueDateStr = scanner.nextLine();
+      LocalDate dueDate = LocalDate.parse(dueDateStr, dateFormatter);
+
+      System.out.print("Reminder Date (YYYY-MM-DD): ");
+      String reminderDateStr = scanner.nextLine();
+      LocalDate reminderDate = LocalDate.parse(reminderDateStr, dateFormatter);
+
+      manager.addBill(new Bill(name, dueDate, reminderDate));
+
+    }
+    scanner.close();
 
     // Check for reminders
+    System.out.println("\nChecking For Reminders");
     manager.checkReminders();
 
+    // Display all bills
+    manager.displayAllBills();
   }
 }
